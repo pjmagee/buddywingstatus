@@ -6,7 +6,7 @@ namespace BuddyWingStatus.Models
     public class PlanetStatus
     {
         public string Name { get; set; }
-        public string Status { get; set; }
+        public string Message { get; set; }
         public string AreaName { get; set; }
         public string Description { get; set; }
         public int HopsReturned { get; set; }
@@ -486,7 +486,7 @@ namespace BuddyWingStatus.Models
     {
         public string Name
         {
-            get { return "Balmorra"; }
+            get { return "Balmorra Empire"; }
         }
 
         public PlanetId AreaID

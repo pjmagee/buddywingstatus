@@ -4,18 +4,53 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Planet Status</h2>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('table').dataTable({
+            "bJQueryUI": true,
+            "bLengthChange": false,
+            "bFilter": false,
+            "bSort": false,
+            "bInfo": false,
+            "bAutoWidth": true,
+            "bPaginate": false
+        });   
+    });
+</script>
 
-<ul>
-    @foreach (var planet in Model)
-    {
-        <li>@planet.Name
-            <ul>
-                <li>Description: @planet.Description</li>
-                <li>Message: @planet.Status</li>
-                <li>Area: @planet.AreaName</li>
-                <li>Hops: @planet.HopsReturned</li>
-            </ul>
-        </li>
-    }
-</ul>
+<table id="status" class="table table-condensed table-bordered table-striped">
+    <thead>
+        <tr>
+            <td>Planet</td>
+            <td>Requested navigation</td>
+            <td>Status Returned</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var planet in Model)
+        {
+            <tr>
+                <td>@planet.Name</td>
+                <td>@planet.Description</td>
+                
+                @{
+                   var color = MvcHtmlString.Create( (planet.Message == "Partial Path: False" || planet.Message == "Partial Path: True") ? "green" : "red");
+                    
+                   }
+
+                <td title="@planet.HopsReturned hops returned" style="text-align: center; color: @color">
+                    
+                    @if (color.ToString() == "green")
+                    {   
+                        @: OK
+                    }
+                    else
+                    {
+
+                        @planet.Message
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

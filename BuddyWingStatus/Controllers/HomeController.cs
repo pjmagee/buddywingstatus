@@ -51,12 +51,12 @@ namespace BuddyWingStatus.Controllers
                 try
                 {
                     var resp = client.GetPath("STATUS", (ulong) p.AreaID, p.StartEnd);
-                    planet.Status = resp.Message;
+                    planet.Message = resp.Message;
                     planet.HopsReturned = resp.PathHops != null ? resp.PathHops.Count() : 0;
                 }
                 catch (Exception e)
                 {
-                    planet.Status = e.Message;
+                    planet.Message = e.Message;
                 }
 
                 planets.Add(planet);
