@@ -1,0 +1,21 @@
+﻿
+@model List<BuddyWingStatus.Models.PlanetStatus>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Planet Status</h2>
+
+<ul>
+    @foreach (var planet in Model)
+    {
+        <li>@planet.Name
+            <ul>
+                <li>Description: @planet.Description</li>
+                <li>Message: @planet.Status</li>
+                <li>Area: @planet.AreaName</li>
+                <li>Hops: @planet.HopsReturned</li>
+            </ul>
+        </li>
+    }
+</ul>
