@@ -22,8 +22,8 @@
     <thead>
         <tr>
             <td>Planet</td>
-            <td>Requested navigation</td>
-            <td>Status Returned</td>
+            <td>Last requested navigation</td>
+            <td>Status response</td>
         </tr>
     </thead>
     <tbody>
@@ -34,21 +34,24 @@
                 <td>@planet.Description</td>
                 
                 @{
-                   var color = MvcHtmlString.Create( (planet.Message == "Partial Path: False" || planet.Message == "Partial Path: True") ? "green" : "red");
-                    
-                   }
 
-                <td title="@planet.HopsReturned hops returned" style="text-align: center; color: @color">
+                    string color;
+                    var message = planet.Message;
+                    var title = (planet.HopsReturned > 0 ? string.Format("{0} hops returned", planet.HopsReturned) : planet.Message);
                     
-                    @if (color.ToString() == "green")
-                    {   
-                        @: OK
+                    if(planet.Message == "Partial Path: False" || planet.Message == "Partial Path: True")
+                    {
+                        message = "GOOD";
+                        color = "green";
                     }
                     else
                     {
-
-                        @planet.Message
+                        color = planet.Message == "BAD" ? "red" : "orange";
                     }
+                }
+
+                <td title="@title" style="text-align: center; color: @color">
+                    @message
                 </td>
             </tr>
         }

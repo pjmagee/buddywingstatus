@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 using BuddyWingStatus.Models;
-using BuddyWingStatus.PathServiceClient;
 
 namespace BuddyWingStatus.Controllers
 {
@@ -46,17 +44,19 @@ namespace BuddyWingStatus.Controllers
 
                 planet.Name = p.Name;
                 planet.AreaName = p.AreaName;
-                planet.Description = p.Description;
+
+                var request = p.Requests.ElementAtOrDefault(new Random().Next(0, p.Requests.Count));
+                planet.Description = request.Description;
 
                 try
                 {
-                    var resp = client.GetPath("STATUS", (ulong) p.AreaID, p.StartEnd);
+                    var resp = client.GetPath("STATUS", (ulong)p.AreaID, request.StartEndCompositeType);
                     planet.Message = resp.Message;
                     planet.HopsReturned = resp.PathHops != null ? resp.PathHops.Count() : 0;
                 }
                 catch (Exception e)
                 {
-                    planet.Message = e.Message;
+                    planet.Message = "BAD RESPONSE.";
                 }
 
                 planets.Add(planet);
